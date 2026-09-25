@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Barbara's Board</title>
+<style>
+html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:#f3efe7;color:#26322e}
+*{box-sizing:border-box}
+#board{min-height:100%;padding:18px}
+.top{display:table;width:100%;border-bottom:3px solid #cad2c8;padding-bottom:10px}
+.top>div{display:table-cell;vertical-align:middle}
+#day{font-size:29px;font-weight:700}.date{font-size:21px;margin-top:3px}
+#clock{text-align:right;font-size:46px;font-weight:700;white-space:nowrap}
+.greeting{text-align:center;font-size:31px;font-weight:700;margin:10px 0 7px}.recurring{max-width:680px;margin:0 auto 9px;background:#e4ebe5;border-radius:10px;padding:8px 14px;text-align:center;font-size:18px;font-weight:600;line-height:1.25}
+.intro{background:#fff;border-radius:14px;padding:14px 18px;margin:0 auto 13px;box-shadow:0 2px 7px rgba(0,0,0,.10);font-size:22px;line-height:1.35;text-align:center}
+.card{background:#fff;border-radius:14px;padding:15px 18px;margin-bottom:12px;box-shadow:0 2px 7px rgba(0,0,0,.10)}
+.label{font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#66756e;margin-bottom:8px}
+.timeline{font-size:21px}
+.item{display:table;width:100%;padding:8px 0;border-bottom:1px solid #e7e8e4}
+.item:last-child{border-bottom:0}
+.check,.when,.what{display:table-cell;vertical-align:middle}
+.check{width:38px;font-size:25px;font-weight:700}
+.when{width:115px;font-weight:700}
+.what{font-size:22px}
+.done .check{color:#3f765f}.done .what{color:#68736e;text-decoration:line-through}
+.bottom{display:table;width:100%;border-spacing:10px 0}
+.bottom .card{display:table-cell;width:50%;vertical-align:top}
+.message{font-size:20px;line-height:1.35}
+.reassure{text-align:center;font-size:21px;font-weight:600;padding:5px 10px 0}
+.night{background:#1e2724;color:#f5f0e6}.night .card,.night .intro{background:#2b3733;color:#f5f0e6}.night .recurring{background:#35443e;color:#f5f0e6}.night .label{color:#c6d0cb}.night .item{border-color:#44514c}
+@media(max-width:700px){#board{padding:11px}.greeting{font-size:27px}#clock{font-size:39px}#day{font-size:24px}.intro{font-size:19px}.timeline{font-size:18px}.what{font-size:19px}.when{width:92px}.bottom{border-spacing:6px 0}.message{font-size:18px}}
+</style>
+</head>
+<body>
+<div id="board">
+ <div class="top">
+  <div><div id="day">Friday</div><div class="date" id="date">September 25, 2026</div></div>
+  <div id="clock">10:30 AM</div>
+ </div>
+
+ <div class="greeting" id="greeting">Good morning, Barbara</div>
+
+ <div class="recurring" id="recurring">
+  You are at home. You are safe and everything is taken care of.
+ </div>
+
+ <div class="intro" id="intro">
+  Today is a nice, easy day. Everything you need to know is right here.
+ </div>
+
+ <div class="card">
+  <div class="label">Today</div>
+  <div class="timeline">
+   <div class="item done"><div class="check">✓</div><div class="when">8:00 AM</div><div class="what">Breakfast</div></div>
+   <div class="item done"><div class="check">✓</div><div class="when">9:00 AM</div><div class="what">Morning medications</div></div>
+   <div class="item"><div class="check">○</div><div class="when">12:00 PM</div><div class="what">Lunch</div></div>
+   <div class="item"><div class="check">○</div><div class="when">2:00 PM</div><div class="what">Sof visits</div></div>
+   <div class="item"><div class="check">○</div><div class="when">5:30 PM</div><div class="what">Dinner</div></div>
+  </div>
+ </div>
+
+ <div class="bottom">
+  <div class="card"><div class="label">Message from family</div><div class="message">We love you. Have a peaceful day. ❤️</div></div>
+  <div class="card"><div class="label">Helpful reminder</div><div class="message">Everything is taken care of. You are safe at home.</div></div>
+ </div>
+
+ <div class="reassure">You are at home. Everything is okay.</div>
+</div>
+<script>
+(function(){
+ function pad(n){return n<10?"0"+n:n}
+ function updateClock(){
+  var d=new Date(),h=d.getHours(),m=d.getMinutes(),ap=h>=12?"PM":"AM",h12=h%12||12;
+  document.getElementById("clock").innerHTML=h12+":"+pad(m)+" "+ap;
+  var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById("day").innerHTML=days[d.getDay()];
+  document.getElementById("date").innerHTML=months[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+  var g=h<12?"Good morning":h<17?"Good afternoon":"Good evening";
+  document.getElementById("greeting").innerHTML=g+", Barbara";
+  document.body.className=(h>=21||h<6)?"night":"";
+ }
+ updateClock(); setInterval(updateClock,30000);
+})();
+</script>
+</body>
+</html>
